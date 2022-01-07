@@ -1,26 +1,12 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
+      "name": "DS_TRICKSTER_(PROMETHEUS PROXY)",
+      "label": "Trickster (Prometheus proxy)",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
       "pluginName": "Prometheus"
-    },
-    {
-      "name": "VAR_TRICKSTER_LABEL_NAME",
-      "type": "constant",
-      "label": "trickster_label_name",
-      "value": "app",
-      "description": ""
-    },
-    {
-      "name": "VAR_TRICKSTER_LABEL_VALUE",
-      "type": "constant",
-      "label": "trickster_label_value",
-      "value": "trickster",
-      "description": ""
     },
     {
       "name": "VAR_PROMETHEUS_LABEL_NAME",
@@ -33,61 +19,68 @@
       "name": "VAR_PROMETHEUS_LABEL_VALUE",
       "type": "constant",
       "label": "prometheus_label_value",
-      "value": "prometheus-collector",
+      "value": "prometheus-harvester",
       "description": ""
     }
   ],
+  "__elements": [],
   "__requires": [
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.0.4"
+      "version": "8.3.3"
     },
     {
       "type": "panel",
       "id": "grafana-piechart-panel",
-      "name": "Pie Chart",
-      "version": "1.3.0"
+      "name": "Pie Chart (old)",
+      "version": "1.6.2"
     },
     {
       "type": "panel",
       "id": "graph",
-      "name": "Graph",
-      "version": "5.0.0"
+      "name": "Graph (old)",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "heatmap",
+      "name": "Heatmap",
+      "version": ""
     },
     {
       "type": "datasource",
       "id": "prometheus",
       "name": "Prometheus",
-      "version": "5.0.0"
+      "version": "1.0.0"
     },
     {
       "type": "panel",
-      "id": "singlestat",
-      "name": "Singlestat",
-      "version": "5.0.0"
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
     },
     {
       "type": "panel",
       "id": "table",
       "name": "Table",
-      "version": "5.0.0"
+      "version": ""
     },
     {
       "type": "panel",
       "id": "text",
       "name": "Text",
-      "version": "5.0.0"
+      "version": ""
     }
   ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "${DS_TRICKSTER_(PROMETHEUS PROXY)}",
         "enable": true,
-        "expr": "changes(process_start_time_seconds{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[1m]) > 0",
+        "expr": "changes(process_start_time_seconds{app=\"trickster\", instance=~\"$instance\"}[1m]) > 0",
         "hide": false,
         "iconColor": "#99440a",
         "limit": 100,
@@ -102,10 +95,10 @@
   },
   "description": "Dashboard for Trickster delta cache for TSDBs",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1524522150635,
+  "iteration": 1641565348238,
   "links": [
     {
       "icon": "question",
@@ -124,45 +117,25 @@
       "title": "Github",
       "tooltip": "Trickster Github repository",
       "type": "link",
-      "url": "https://github.com/Comcast/trickster"
-    },
-    {
-      "icon": "bolt",
-      "tags": [],
-      "targetBlank": true,
-      "title": "Twitter",
-      "tooltip": "Trickster Twitter wall",
-      "type": "link",
-      "url": "https://twitter.com/tricksterio"
+      "url": "https://github.com/trickstercache/trickster"
     }
   ],
+  "liveNow": false,
   "panels": [
     {
-      "content": "<iframe src=\"https://fusakla.github.io/trickster-grafana-dashboard\" width=\"100%\" height=\"400px\"></iframe>",
       "gridPos": {
-        "h": 10,
-        "w": 24,
+        "h": 6,
+        "w": 4,
         "x": 0,
         "y": 0
       },
-      "id": 51,
-      "links": [],
-      "mode": "html",
-      "title": "",
-      "type": "text"
-    },
-    {
-      "content": "<a href=\"https://twitter.com/tricksterio?lang=cs\" target=\"_blank\"><img src=\"https://i.imgur.com/uodNnPR.png\"></img></a>",
-      "gridPos": {
-        "h": 8,
-        "w": 4,
-        "x": 0,
-        "y": 10
-      },
       "id": 41,
       "links": [],
-      "mode": "html",
-      "title": "",
+      "options": {
+        "content": "<a href=\"https://github.com/trickstercache/trickster/tree/main/docs\" target=\"_blank\"><img src=\"https://i.imgur.com/uodNnPR.png\", width=\"200\", height=\"200\", style=\"position:relative;left:10%\"></img></a>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.3.3",
       "transparent": true,
       "type": "text"
     },
@@ -172,12 +145,10 @@
         "uncached": "#e7eff7"
       },
       "breakPoint": "50%",
-      "cacheTimeout": null,
       "combine": {
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "${DS_PROMETHEUS}",
       "description": "Shows percentage of query cache hit or miss of Trickster. \nFor more info about cache success see graph info on the right.",
       "fontSize": "80%",
       "format": "short",
@@ -185,10 +156,9 @@
         "h": 8,
         "w": 5,
         "x": 4,
-        "y": 10
+        "y": 0
       },
       "id": 45,
-      "interval": null,
       "legend": {
         "percentage": true,
         "percentageDecimals": 0,
@@ -203,16 +173,20 @@
       "strokeWidth": "4",
       "targets": [
         {
-          "expr": "sum(increase(trickster_points_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])) by (status)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(trickster_proxy_points_total{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval])) by (cache_status)",
           "format": "time_series",
           "instant": false,
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ status }}",
+          "legendFormat": "{{ cache_status }}",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
       "title": "Cache hit/miss",
       "type": "grafana-piechart-panel",
       "valueName": "total"
@@ -229,16 +203,23 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "decimals": 2,
       "description": "Shows percentage and count of queried points found of not in Trickster cache.\n\n- cached = found in cache\n- uncached = not found in cache\n\n**The more cached the better.**",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 7,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 15,
         "x": 9,
-        "y": 10
+        "y": 0
       },
+      "hiddenSeries": false,
       "id": 37,
       "legend": {
         "alignAsTable": true,
@@ -257,12 +238,18 @@
       "linewidth": 0,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
       "percentage": true,
+      "pluginVersion": "8.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:359",
           "alias": "total",
           "lines": false,
           "stack": false
@@ -273,20 +260,24 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(trickster_points_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])) by (status)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(trickster_proxy_points_total{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval])) by (cache_status)",
           "format": "time_series",
           "instant": false,
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ status }}",
+          "legendFormat": "{{ cache_status }}",
           "metric": "",
           "refId": "A",
           "step": 300
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
+      "timeRegions": [],
       "title": "Percentage of cache hit",
       "tooltip": {
         "shared": true,
@@ -295,95 +286,97 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
+          "$$hashKey": "object:539",
           "decimals": 0,
           "format": "short",
-          "label": null,
           "logBase": 1,
           "max": "100",
-          "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:540",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#3d7bb6",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+      },
       "description": "How many instances are running",
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#3d7bb6",
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 5,
         "w": 4,
         "x": 0,
-        "y": 18
+        "y": 6
       },
       "id": 1,
-      "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "#3d7bb6",
-        "show": true
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
       },
-      "tableColumn": "",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "count(process_start_time_seconds{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"})",
+          "expr": "count(process_start_time_seconds{app=\"trickster\", instance=~\"$instance\"})",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -393,18 +386,8 @@
           "step": 900
         }
       ],
-      "thresholds": "",
       "title": "# of Instances",
-      "type": "singlestat",
-      "valueFontSize": "200%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "stat"
     },
     {
       "aliasColors": {
@@ -417,12 +400,10 @@
         "uncached": "#c15c17"
       },
       "breakPoint": "50%",
-      "cacheTimeout": null,
       "combine": {
         "label": "Other",
         "threshold": "0.03"
       },
-      "datasource": "${DS_PROMETHEUS}",
       "decimals": 1,
       "description": "Shows percentage of query cache hit types of Trickster. \nFor more info about cache hit types see graph info on the right.",
       "fontSize": "80%",
@@ -431,10 +412,9 @@
         "h": 8,
         "w": 5,
         "x": 4,
-        "y": 18
+        "y": 8
       },
       "id": 46,
-      "interval": null,
       "legend": {
         "percentage": true,
         "percentageDecimals": 0,
@@ -449,16 +429,20 @@
       "strokeWidth": "4",
       "targets": [
         {
-          "expr": "sum(increase(trickster_requests_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])) by (status)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(trickster_proxy_requests_total{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval])) by (cache_status)",
           "format": "time_series",
           "instant": false,
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ status }}",
+          "legendFormat": "{{ cache_status }}",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
       "title": "Query cache hit type",
       "type": "grafana-piechart-panel",
       "valueName": "total"
@@ -479,16 +463,23 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "decimals": 2,
       "description": "Shows percentage and count of query cache hit types. Those are:\n\n- rmiss = query range miss\n- kmiss = key not found in cache \n- phit = partial hit\n- hit = found all data in cache\n- purge = i'm not sure :) (probably cache flush)",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 10,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 15,
         "x": 9,
-        "y": 18
+        "y": 8
       },
+      "hiddenSeries": false,
       "id": 39,
       "legend": {
         "alignAsTable": true,
@@ -509,7 +500,12 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
       "percentage": true,
+      "pluginVersion": "8.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -519,19 +515,23 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(trickster_requests_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])) by (status)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(trickster_proxy_requests_total{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval])) by (cache_status)",
           "format": "time_series",
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ status }}",
+          "legendFormat": "{{ cache_status }}",
           "metric": "",
           "refId": "A",
           "step": 300
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
+      "timeRegions": [],
       "title": "Percentage of query cache hit types",
       "tooltip": {
         "shared": true,
@@ -540,116 +540,110 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
+          "$$hashKey": "object:640",
           "decimals": 0,
           "format": "short",
-          "label": null,
           "logBase": 1,
           "max": "100",
           "min": "0",
           "show": true
         },
         {
+          "$$hashKey": "object:641",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#3d7bb6",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "${DS_PROMETHEUS}",
       "description": "Total count of points served",
-      "format": "short",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#3d7bb6",
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 5,
         "w": 4,
         "x": 0,
-        "y": 22
+        "y": 11
       },
       "id": 49,
-      "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "#3d7bb6",
-        "show": true
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
       },
-      "tableColumn": "",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(increase(trickster_points_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval]))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(trickster_proxy_points_total{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval]))",
           "format": "time_series",
           "instant": false,
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
           "refId": "A",
           "step": 900
         }
       ],
-      "thresholds": "",
       "title": "# of served points",
-      "type": "singlestat",
-      "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "total"
+      "type": "stat"
     },
     {
       "aliasColors": {
@@ -661,15 +655,22 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "description": "Total count of requests aggregated by instance.\nShows how are the requests balanced.",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 4,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 16
       },
+      "hiddenSeries": false,
       "id": 7,
       "legend": {
         "alignAsTable": true,
@@ -690,12 +691,18 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "8.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:535",
           "alias": "total",
           "lines": false,
           "stack": false
@@ -706,9 +713,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(trickster_requests_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])) by (instance)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(trickster_proxy_requests_total{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval])) by (instance)",
           "format": "time_series",
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
           "metric": "",
@@ -716,9 +728,14 @@
           "step": 300
         },
         {
-          "expr": "sum(increase(trickster_requests_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval]))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(trickster_proxy_requests_total{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval]))",
           "format": "time_series",
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "total",
           "refId": "B",
@@ -726,8 +743,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
+      "timeRegions": [],
       "title": "Total requests by instance",
       "tooltip": {
         "shared": true,
@@ -736,137 +752,90 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
+          "$$hashKey": "object:718",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:719",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
-      "aliasColors": {
-        "50 %": "#cffaff",
-        "90 %": "#5195ce",
-        "99 %": "#0a50a1"
+      "cards": {
+        "cardPadding": 0,
+        "cardRound": 0
       },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateBlues",
+        "exponent": 0.5,
+        "mode": "spectrum"
+      },
+      "dataFormat": "tsbuckets",
       "description": "Shows how long the requests took to be served as histogram using quantiles. This means that x% was served faster than the value of the metric.\nThat means:\n- 50%: shows time before 50% of requests was served\n- 90%: shows time before 90% of requests was served\n- 99%: shows time before 99% of requests was served",
-      "fill": 1,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 16
       },
+      "heatmap": {},
+      "hideZeroBuckets": true,
+      "highlightCards": true,
       "id": 16,
       "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
+        "show": true
       },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "8.3.3",
+      "reverseYBuckets": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.5, sum(rate(trickster_proxy_duration_seconds_bucket{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])) by (le))",
-          "format": "time_series",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(trickster_proxy_request_duration_seconds_bucket{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval])) by (le)",
+          "format": "heatmap",
           "hide": false,
-          "interval": "$aggregation_interval",
+          "instant": false,
+          "interval": "2m",
           "intervalFactor": 1,
-          "legendFormat": "50 %",
+          "legendFormat": "{{le}}",
           "refId": "E"
-        },
-        {
-          "expr": "histogram_quantile(0.9, sum(rate(trickster_proxy_duration_seconds_bucket{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])) by (le))",
-          "format": "time_series",
-          "hide": false,
-          "interval": "$aggregation_interval",
-          "intervalFactor": 1,
-          "legendFormat": "90 %",
-          "refId": "C",
-          "step": 120
-        },
-        {
-          "expr": "histogram_quantile(0.99, sum(rate(trickster_proxy_duration_seconds_bucket{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])) by (le))",
-          "format": "time_series",
-          "hide": false,
-          "interval": "$aggregation_interval",
-          "intervalFactor": 1,
-          "legendFormat": "99 %",
-          "refId": "A",
-          "step": 120
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Proxy request duration",
       "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
         "show": true,
-        "values": []
+        "showHistogram": true
       },
-      "yaxes": [
-        {
-          "format": "ms",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ]
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "yAxis": {
+        "format": "s",
+        "logBase": 1,
+        "show": true
+      },
+      "yBucketBound": "auto"
     },
     {
       "aliasColors": {
@@ -880,15 +849,22 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "description": "Shows total query count aggregated by type.\nThere are two types;\n- query: instant query resulting in data in given time\n- query_range: query for data in given time interval",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 4,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 33
+        "y": 23
       },
+      "hiddenSeries": false,
       "id": 26,
       "legend": {
         "alignAsTable": true,
@@ -907,12 +883,18 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "8.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:713",
           "alias": "total",
           "lines": false,
           "stack": false
@@ -923,9 +905,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(trickster_requests_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])) by (method)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(trickster_proxy_requests_total{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval])) by (http_status)",
           "format": "time_series",
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ method }}",
           "metric": "",
@@ -933,9 +920,14 @@
           "step": 300
         },
         {
-          "expr": "sum(increase(trickster_requests_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval]))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(trickster_proxy_requests_total{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval]))",
           "format": "time_series",
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "total",
           "refId": "B",
@@ -943,9 +935,8 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Total requests by type",
+      "timeRegions": [],
+      "title": "Total requests by http_status",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -953,109 +944,177 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
+          "$$hashKey": "object:872",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:873",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
-      "columns": [
-        {
-          "text": "Total",
-          "value": "total"
-        }
-      ],
-      "datasource": "${DS_PROMETHEUS}",
       "description": "This table shows query count by origin on which it was called. Those can differ depending on configuration of Trickster.",
-      "fontSize": "100%",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Time"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Metric"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Query origin"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Call count"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 33
+        "y": 23
       },
       "id": 43,
       "links": [],
-      "pageSize": null,
-      "scroll": true,
-      "showHeader": true,
-      "sort": {
-        "col": 1,
-        "desc": true
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
       },
-      "styles": [
-        {
-          "alias": "Time",
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "hidden"
-        },
-        {
-          "alias": "Query origin",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "pattern": "Metric",
-          "preserveFormat": false,
-          "sanitize": false,
-          "thresholds": [],
-          "type": "string",
-          "unit": "short"
-        },
-        {
-          "alias": "Call count",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "pattern": "Total",
-          "thresholds": [],
-          "type": "number",
-          "unit": "short"
-        }
-      ],
+      "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(increase(trickster_requests_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])) by (origin)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": false,
+          "expr": "sum(increase(trickster_proxy_requests_total{app=\"trickster\", instance=~\"$instance\", origin_name=~\"$origin_name\", origin_type=~\"$origin_type\"}[$aggregation_interval])) by (origin_name, origin_type)",
           "format": "time_series",
-          "instant": false,
+          "instant": true,
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ origin }}",
+          "legendFormat": "{{ origin_type }} {{ origin_name }}",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
       "title": "Query calls per origin",
-      "transform": "timeseries_aggregations",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "labelsToFields": true,
+            "mode": "seriesToRows",
+            "reducers": [
+              "lastNotNull"
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Field": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
       "type": "table"
     },
     {
@@ -1064,11 +1123,10 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 30
       },
       "id": 21,
       "panels": [],
-      "repeat": null,
       "title": "Trickster performance data",
       "type": "row"
     },
@@ -1077,15 +1135,22 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "decimals": 2,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 13,
         "x": 0,
-        "y": 41
+        "y": 31
       },
+      "hiddenSeries": false,
       "id": 8,
       "legend": {
         "avg": false,
@@ -1100,7 +1165,12 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "8.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1117,7 +1187,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(process_cpu_seconds_total{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}[$aggregation_interval])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "rate(process_cpu_seconds_total{app=\"trickster\", instance=~\"$instance\"}[$aggregation_interval])",
           "format": "time_series",
           "groupBy": [
             {
@@ -1133,7 +1208,7 @@
               "type": "fill"
             }
           ],
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{instance}}",
           "orderByTime": "ASC",
@@ -1157,6 +1232,10 @@
           "tags": []
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
           "expr": "max(kube_pod_container_resource_limits_cpu_cores{container=\"trickster\", pod=~\"$instance\"}) by (instance)",
           "format": "time_series",
           "intervalFactor": 1,
@@ -1165,8 +1244,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
+      "timeRegions": [],
       "title": "CPU usage/s",
       "tooltip": {
         "shared": true,
@@ -1175,44 +1253,48 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
+          "$$hashKey": "object:970",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:971",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 11,
         "x": 13,
-        "y": 41
+        "y": 31
       },
+      "hiddenSeries": false,
       "id": 47,
       "legend": {
         "avg": false,
@@ -1227,12 +1309,18 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "8.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:1233",
           "alias": "/Limit .*/",
           "color": "#C15C17",
           "dashes": true,
@@ -1244,15 +1332,24 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "process_resident_memory_bytes{$trickster_label_name=~\"$trickster_label_value\", instance=~\"$instance\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "process_resident_memory_bytes{app=\"trickster\", instance=~\"$instance\"}",
           "format": "time_series",
           "hide": false,
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
           "refId": "E"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
           "expr": "max(kube_pod_container_resource_limits_memory_bytes{container=\"trickster\", pod=~\"$instance\"}) by (pod)",
           "format": "time_series",
           "intervalFactor": 1,
@@ -1261,8 +1358,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
+      "timeRegions": [],
       "title": "Memory usage",
       "tooltip": {
         "shared": true,
@@ -1271,30 +1367,27 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1202",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:1203",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "collapsed": false,
@@ -1302,7 +1395,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 48
+        "y": 38
       },
       "id": 34,
       "panels": [],
@@ -1314,17 +1407,28 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+      },
       "description": "This shows how long did it take  Prometheus to server requests.\nThis could be possibly lower time when using Trickster since the queries can be for smaller more recent time range.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 49
+        "y": 39
       },
+      "hiddenSeries": false,
       "id": 29,
       "legend": {
         "avg": true,
@@ -1339,7 +1443,12 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "8.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1359,8 +1468,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
+      "timeRegions": [],
       "title": "Prometheus Query elapsed time",
       "tooltip": {
         "msResolution": false,
@@ -1370,9 +1478,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1381,19 +1487,18 @@
           "format": "s",
           "label": "",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {
@@ -1405,17 +1510,24 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "description": "Shows total request count on Prometheus server.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 49
+        "y": 39
       },
+      "hiddenSeries": false,
       "id": 31,
       "legend": {
         "avg": false,
@@ -1430,7 +1542,12 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "8.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1440,8 +1557,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(http_requests_total{$prometheus_label_name=~\"$prometheus_label_value\"}[$aggregation_interval])) by (instance, handler) > 0",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(prometheus_http_requests_total{$prometheus_label_name=~\"$prometheus_label_value\"}[$aggregation_interval])) by (instance, handler) > 0",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ handler }} on {{ instance }}",
           "metric": "",
@@ -1450,8 +1573,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
+      "timeRegions": [],
       "title": "Prometheus Request count",
       "tooltip": {
         "msResolution": false,
@@ -1461,144 +1583,111 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1046",
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:1047",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
-      "aliasColors": {
-        "Chunks": "#1F78C1",
-        "Chunks to persist": "#508642",
-        "Max chunks": "#052B51",
-        "Max to persist": "#3F6833",
-        "prometheus 0.9": "#0a50a1",
-        "prometheus 0.99": "#ea6460",
-        "query 0.5": "#e0f9d7",
-        "query 0.99": "#64b0c8",
-        "query_range 0.5": "#9ac48a",
-        "query_range 0.9": "#f4d598",
-        "query_range 0.99": "#f4d598"
+      "cards": {
+        "cardPadding": 0,
+        "cardRound": 0
       },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateBlues",
+        "exponent": 0.5,
+        "mode": "spectrum"
+      },
+      "dataFormat": "tsbuckets",
       "description": "Shows duration how long it takes to Prometheus to server requests aggregated by handlers",
-      "editable": true,
-      "error": false,
-      "fill": 1,
       "gridPos": {
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 49
+        "y": 39
       },
+      "heatmap": {},
+      "hideZeroBuckets": false,
+      "highlightCards": true,
       "id": 32,
       "legend": {
-        "avg": false,
-        "current": false,
-        "hideEmpty": true,
-        "hideZero": true,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
+        "show": true
       },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "8.3.3",
+      "reverseYBuckets": false,
       "targets": [
         {
-          "expr": "sum(http_request_duration_microseconds{$prometheus_label_name=~\"$prometheus_label_value\"}) by (instance, handler, quantile)",
-          "format": "time_series",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(prometheus_http_request_duration_seconds_bucket{$prometheus_label_name=~\"$prometheus_label_value\"}[$aggregation_interval])) by (le)",
+          "format": "heatmap",
           "hide": false,
+          "interval": "2m",
           "intervalFactor": 1,
-          "legendFormat": "{{ handler }} {{ quantile }} {{instance}}",
-          "refId": "B"
+          "legendFormat": "{{le}}",
+          "refId": "C"
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Request duration per handler",
+      "title": "Prometheus request duration histogram",
       "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
         "show": true,
-        "values": []
+        "showHistogram": true
       },
-      "yaxes": [
-        {
-          "format": "µs",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ]
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "yAxis": {
+        "format": "s",
+        "logBase": 1,
+        "show": true
+      },
+      "yBucketBound": "auto"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "decimals": 2,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 56
+        "y": 46
       },
+      "hiddenSeries": false,
       "id": 48,
       "legend": {
         "avg": false,
@@ -1613,7 +1702,12 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "8.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1632,14 +1726,23 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
           "expr": "rate(process_cpu_seconds_total{$prometheus_label_name=~\"$prometheus_label_value\"}[$aggregation_interval])",
           "format": "time_series",
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
           "expr": "max(kube_pod_container_resource_limits_cpu_cores{container=\"prometheus\"}) by (pod)",
           "format": "time_series",
           "intervalFactor": 1,
@@ -1648,8 +1751,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
+      "timeRegions": [],
       "title": "CPU usage/s",
       "tooltip": {
         "shared": true,
@@ -1658,44 +1760,48 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1278",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:1279",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 56
+        "y": 46
       },
+      "hiddenSeries": false,
       "id": 35,
       "legend": {
         "avg": false,
@@ -1710,7 +1816,12 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "8.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1729,14 +1840,23 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
+          "exemplar": true,
           "expr": "process_resident_memory_bytes{$prometheus_label_name=~\"$prometheus_label_value\"}",
           "format": "time_series",
-          "interval": "$aggregation_interval",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ instance }}",
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+          },
           "expr": "max(kube_pod_container_resource_limits_memory_bytes{container=\"prometheus\"}) by (pod)",
           "format": "time_series",
           "intervalFactor": 1,
@@ -1745,8 +1865,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
+      "timeRegions": [],
       "title": "Memory usage",
       "tooltip": {
         "shared": true,
@@ -1755,125 +1874,96 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1354",
           "format": "decbytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:1355",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     }
   ],
-  "refresh": "1m",
-  "schemaVersion": 16,
+  "refresh": false,
+  "schemaVersion": 34,
   "style": "dark",
-  "tags": [
-    "prometheus",
-    "trickster"
-  ],
+  "tags": [],
   "templating": {
     "list": [
       {
-        "current": {
-          "value": "${VAR_TRICKSTER_LABEL_NAME}",
-          "text": "${VAR_TRICKSTER_LABEL_NAME}"
-        },
         "hide": 2,
-        "label": null,
-        "name": "trickster_label_name",
-        "options": [
-          {
-            "value": "${VAR_TRICKSTER_LABEL_NAME}",
-            "text": "${VAR_TRICKSTER_LABEL_NAME}"
-          }
-        ],
-        "query": "${VAR_TRICKSTER_LABEL_NAME}",
-        "type": "constant"
-      },
-      {
-        "current": {
-          "value": "${VAR_TRICKSTER_LABEL_VALUE}",
-          "text": "${VAR_TRICKSTER_LABEL_VALUE}"
-        },
-        "hide": 2,
-        "label": null,
-        "name": "trickster_label_value",
-        "options": [
-          {
-            "value": "${VAR_TRICKSTER_LABEL_VALUE}",
-            "text": "${VAR_TRICKSTER_LABEL_VALUE}"
-          }
-        ],
-        "query": "${VAR_TRICKSTER_LABEL_VALUE}",
-        "type": "constant"
-      },
-      {
+        "name": "prometheus_label_name",
+        "query": "${VAR_PROMETHEUS_LABEL_NAME}",
+        "skipUrlSync": false,
+        "type": "constant",
         "current": {
           "value": "${VAR_PROMETHEUS_LABEL_NAME}",
-          "text": "${VAR_PROMETHEUS_LABEL_NAME}"
+          "text": "${VAR_PROMETHEUS_LABEL_NAME}",
+          "selected": false
         },
-        "hide": 2,
-        "label": null,
-        "name": "prometheus_label_name",
         "options": [
           {
             "value": "${VAR_PROMETHEUS_LABEL_NAME}",
-            "text": "${VAR_PROMETHEUS_LABEL_NAME}"
+            "text": "${VAR_PROMETHEUS_LABEL_NAME}",
+            "selected": false
           }
-        ],
-        "query": "${VAR_PROMETHEUS_LABEL_NAME}",
-        "type": "constant"
+        ]
       },
       {
+        "hide": 2,
+        "name": "prometheus_label_value",
+        "query": "${VAR_PROMETHEUS_LABEL_VALUE}",
+        "skipUrlSync": false,
+        "type": "constant",
         "current": {
           "value": "${VAR_PROMETHEUS_LABEL_VALUE}",
-          "text": "${VAR_PROMETHEUS_LABEL_VALUE}"
+          "text": "${VAR_PROMETHEUS_LABEL_VALUE}",
+          "selected": false
         },
-        "hide": 2,
-        "label": null,
-        "name": "prometheus_label_value",
         "options": [
           {
             "value": "${VAR_PROMETHEUS_LABEL_VALUE}",
-            "text": "${VAR_PROMETHEUS_LABEL_VALUE}"
+            "text": "${VAR_PROMETHEUS_LABEL_VALUE}",
+            "selected": false
           }
-        ],
-        "query": "${VAR_PROMETHEUS_LABEL_VALUE}",
-        "type": "constant"
+        ]
       },
       {
         "allValue": ".*",
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+        },
+        "definition": "label_values(process_start_time_seconds{app=\"trickster\"}, instance)",
         "hide": 0,
         "includeAll": true,
         "label": "Instance",
         "multi": true,
         "name": "instance",
         "options": [],
-        "query": "label_values(process_start_time_seconds{$trickster_label_name=~\"$trickster_label_value\"}, instance)",
+        "query": {
+          "query": "label_values(process_start_time_seconds{app=\"trickster\"}, instance)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1883,6 +1973,7 @@
         "auto_count": 100,
         "auto_min": "2m",
         "current": {
+          "selected": false,
           "text": "auto",
           "value": "$__auto_interval_aggregation_interval"
         },
@@ -1947,19 +2038,68 @@
           }
         ],
         "query": "1m,2m,3m,5m,10m,15m,30m,1h,6h,1d",
+        "queryValue": "",
         "refresh": 2,
+        "skipUrlSync": false,
         "type": "interval"
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+        },
+        "definition": "label_values(trickster_proxy_requests_total{app=\"trickster\"}, origin_name)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "origin_name",
+        "multi": true,
+        "name": "origin_name",
+        "options": [],
+        "query": {
+          "query": "label_values(trickster_proxy_requests_total{app=\"trickster\"}, origin_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_TRICKSTER_(PROMETHEUS PROXY)}"
+        },
+        "definition": "label_values(trickster_proxy_requests_total{app=\"trickster\"}, origin_type)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "origin_type",
+        "multi": true,
+        "name": "origin_type",
+        "options": [],
+        "query": {
+          "query": "label_values(trickster_proxy_requests_total{app=\"trickster\"}, origin_type)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-12h",
-    "to": "now"
+    "from": "now-3h",
+    "to": "now-1m"
   },
   "timepicker": {
     "nowDelay": "1m",
     "refresh_intervals": [
-      "5s",
       "10s",
       "30s",
       "1m",
@@ -1984,6 +2124,7 @@
   },
   "timezone": "",
   "title": "Trickster",
-  "uid": "JBXDP9Wmk",
-  "version": 2
+  "uid": "DXLymUA7k",
+  "version": 9,
+  "weekStart": ""
 }
