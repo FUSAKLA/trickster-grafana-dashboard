@@ -1,9 +1,9 @@
 # Trickster  Grafana dashboard
 I made this dashboard as tool to benchmark and test [Trickster](https://github.com/Comcast/trickster) 
-delta cache for time-series databases. It should speed-up loading of your frequently viewed dashboards.
+delta cache for time-series databases. It should speed up loading of your frequently viewed dashboards.
 
 This dashboard should give you good idea about how is Trickster effective in caching, it's utilization 
-and possibility to observe possible impacts on time-series databases behind it (currently only Prometheus).
+and chance to observe possible impacts on time-series databases behind it (currently only Prometheus).
 
 
 ## Description
@@ -23,7 +23,7 @@ Every graph should have description tooltip on the upper left cornet if you hove
 instance or the Trickster itself if you like recursion :)_
 
 ### Variables
-To identify Trickster and Prometheus metrics dashboard needs you to specify label and it's 
+To identify Trickster and Prometheus metrics dashboard needs you to specify label, and it's 
 value identifying their metrics. Those variables are:
 - trickster_label_name - name of the label identifying Trickster metrics (e.g. `app`)
 - trickster_label_value - value of the label identifying Trickster metrics (e.g. `trickster`)
@@ -51,16 +51,16 @@ There are three ways to install this dashboard
 ## Contributing
 
 Sadly I don't use exact version in production due to some architectonic
-reasons and optimizations for my own setup but it's very much the same.
+reasons and optimizations for my own setup, but it's very much the same.
 
-But i will try to sometimes update this dashboard if I make some major changes.
+But I will try to sometimes update this dashboard if I make some major changes.
 
 I'll be happy to add any reasonable feature you would appreciate so don't hesitate to create issue or PR directly. 
 
-Please if you make a PR add also screenshot of your change for easier CR. Thank's!
+Please if you make a PR add also screenshot of your change for easier CR. Thanks!
 
 
 ## Credits
 
-Thank's goes to guys from Comcast who open-sourced the Trickster! 
+Thanks goes to guys from Comcast who open-sourced the Trickster! 
 Great work and thanks :)
